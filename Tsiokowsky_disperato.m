@@ -1,34 +1,11 @@
 close all; clc; clear;
-% Questo programma calcola il delta v necessario a un razzo e la m2 del
-% secondo stadio
-% Approssimazioni fatte:
-% Resistenza dell'aria da una vd = 0.1% per il primo stadio e 0.05% per il
-% secondo stadio (PA quando hai la traiettoria effettiva, dopo 100km non
-% vale più la resistenza dell'aria)
-% Considero la V effettiva pari alla v del razzo e la calcolo con go
-% Considero che il razzo non acceleri ma che ogni stadio vada alla sua ve
-% Tempo fra spegnimento di un motore e accensione del successivo:
-% ts = 0 perché si accendono prima del distacco
-% suppongo che lo stadio 3 e 4 mettano il satellite in orbita
-% 1. g = variabile con la quota
-% 1. g non considerata nel 2,3,4 stadio
-% 1. razzo in verticale
-% 1. g è considerata all'accensione di ogni stadio
-% 2. razzo con un angolo di 82°
+% Questo programma calcola il deltaV del primo stadio del razzo UDMH 
+% originario, lo uguaglia al primo stadio modificato e calcola di
+% conseguenza i parametri necessari, come Mtot di propellente da caricare,
+% Vtot e tb per completare la missione
 
 % Il calcolo può essere fatto tenendo conto di due tipi di missioni: LEO e
-% GTO entrambe fatte con quarto stadio Briz
-
-
-% Il razzo vola in verticale
-% Non considero la resistenza dell'aria perché non abbiamo i dati necessari
-% a considerarla, sarebbe un'implementazione troppo complicata
-% Considero l'accelerazion del razzo circa constante (approssimazione
-% valida fino a LEO
-% Ogni motore si accende appena prima del distacco
-% info dal sito
-% http://spaceacademy.net.au/flight/spfl/rocksci.htm
-% http://www.astronautix.com/p/proton-k17s40.html
+% GTO entrambe fatte con quarto stadio Briz o con il Block
 
 go = 9.81;
 ts = 0;
@@ -44,44 +21,38 @@ rhoo = 1.225;
 % ue_i = velocità efficacie dello stadio i 
 
 %% DATI DA CAMBIARE QUARTO STADIO
+
+%Britz
 %Mpay = 6900; %GTO
 Mpay = 20000; %LEO
 
-%Britz
 Msu_4 = 2390;
-Mpu_4 = 19820;
-tu4 = 3200;
-Isp_u4 = 328;
-ue_4 = Isp_u4 * go;
+Mpu_4 = 19800;
 
 D4 = 4.0;
 L4 = 2.65;
 T_u4 = 19620;
 
 %Block
+%Msu_4 = 3420;
+%Mpu_4 = 15050;
+%Mpay = 2600;
 
 %% DATI ALTRI STADI
 Msu_3 = 4185;
 Mpu_3 = 46562;
-tu3 = 234;
 Msu_2 = 11400;
 Mpu_2 = 157300;
-tu2 = 213.3;
 Msu_1 = 30600;
 Mpu_1 = 6.457345588576308e+04 * 6;
 tu1 = 119.7;
 
 Isp_u1 = 2890.2/go;
-Isp_u2 = 327;
-Isp_u3 = 325;
 
 ue_1 = Isp_u1 * go; %m/s
-ue_2 = Isp_u2 * go;
-ue_3 = Isp_u3 * go;
 
 % DATI per funzione
 T_u =1.649783376099530e+06 * 6;
-% dovrebbe essere 10MN,quindi 10^7%N
 mpunto_p_u = 5.137721755640139e+02 * 6; %kg/s
 D1 = 7.4; %m
 D2 = 4.1;
@@ -103,12 +74,9 @@ Atot1 = A1 + A2 + A3 + A4;
 Atot2 = A2 + A3 + A4;
 Atot3 = A3 + A4;
 
-T_u2 = 2400000;
-T_u3 = 583000;
 %% Calcolo delta v UDMH approssimazione 1
 % mi_ui = massa iniziale dello stadio i 
 % mf_ui = massa finale dello stadio i
-% dd_1 = v percentuale di drag
 mi_u4 = Msu_4 + Mpay + Mpu_4; 
 mf_u4 = Msu_4 + Mpay;
 mi_u3 = Msu_3 + mi_u4 + Mpu_3; 
@@ -117,7 +85,7 @@ mi_u2 = Msu_2 + mi_u3 + Mpu_2;
 mf_u2 = Msu_2 + mi_u3;
 mi_u1 = Msu_1 + mi_u2 + Mpu_1; 
 mf_u1 = Msu_1 + mi_u2;
-%vdu = sqrt(2*Fd/(Ae*Cd*rho_a));
+
 %% calcolo delle altezze e g di ogni stadio:
 %ricavo l'angolo per la salit acon h circa 42 km
 A = [pi/32:0.001:pi/2]
@@ -138,14 +106,10 @@ alpha = A(238);
 % Calcolo delle caratteristiche con secondo stadio invariato per avere un
 % paragone sensato
 Ms_1 = 30600;
-%Mp_1 = 6.7829e+04 * 6;
-%t1 = 102.0878;
 
 Isp_1 = 296.6463;
 ve_1 = Isp_1 * go; 
 
-%mi_1 = Ms_1 + mi_u2 + Mp_1; 
-%mf_1 = Ms_1 + mi_u2;
 Tr = 1.7141e+06 * 6;
 mpunto_p = 632.7768*6;
 
@@ -173,7 +137,7 @@ while (par >= toll && j<10^5)
     end
     
     if a == 0
-    %    return
+   
     else
         i = i+1;
         Mfuel(i) = mscelta2;
@@ -184,10 +148,12 @@ while (par >= toll && j<10^5)
 end
 figure(7)
 plot(Mfuel)
+title('Propellant mass iterations')
 figure(8)
 plot(tbr)
+title('Burning time iterations')
 
-Mfuel(end)-Mpu_1
+dM = Mfuel(end)-Mpu_1
 
 Itot_u = Isp_u1 * Mpu_1;
 Itot = Isp_1 * Mfuel(end);

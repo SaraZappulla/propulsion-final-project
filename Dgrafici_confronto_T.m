@@ -53,9 +53,9 @@ hold on
 a = polyfit(Pc,Tm1,2)
 y = polyval(a,Pc)
 b = Tm1-y
-[T1,T2] = maxk(b,3)
-vect1 = T1
-vect2 = T2
+[T2,T3] = maxk(b,3)
+vect1 = T2
+vect2 = T3
 figure(6)
 plot(Pc,b)
 hold on

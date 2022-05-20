@@ -33,26 +33,25 @@ ts = 0;
 % Mpu_i = massa del propellente dello stadio i dell'originale
 % tui = tempo totale di combustione dello stadio i
 % Isp_ui = Impulso specifico stadio i
-% ue_i = velocità efficacie dello stadio i 
+% ue_i = velocità effettiva dello stadio i 
 
 %% DATI DA CAMBIARE QUARTO STADIO
-%Mpay = 6900; %GTO
-Mpay = 20000; %LEO
+
 
 %Britz
+%Mpay = 6900; %GTO
+Mpay = 20000; %LEO
 Msu_4 = 2390;
 Mpu_4 = 19820;
-tu4 = 3200;
-Isp_u4 = 328;
-ue_4 = Isp_u4 * go;
 
 %Block
-...
+%Msu_4 = 3420;
+%Mpu_4 = 15050;
+%Mpay = 2600; %GTO
     
 %% DATI ALTRI STADI
 Msu_3 = 4185;
 Mpu_3 = 46562;
-tu3 = 234;
 Msu_2 = 11400;
 Mpu_2 = 157300;
 tu2 = 213.3;
@@ -62,11 +61,9 @@ tu1 = 119.7;
 
 Isp_u1 = 2890.2/go;
 Isp_u2 = 327;
-Isp_u3 = 325;
 
 ue_1 = Isp_u1 * go; %m/s
 ue_2 = Isp_u2 * go;
-ue_3 = Isp_u3 * go;
 
 % DATI per funzione
 T_u =1.649783376099530e+06 * 6;
@@ -81,17 +78,12 @@ mi_u2 = Msu_2 + mi_u3 + Mpu_2;
 mf_u2 = Msu_2 + mi_u3;
 mi_u1 = Msu_1 + mi_u2 + Mpu_1; 
 mf_u1 = Msu_1 + mi_u2;
-%vdu = sqrt(2*Fd/(Ae*Cd*rho_a));
 
 du_1 = ue_1 * log(mi_u1/mf_u1) - go * tu1;
 du_2 = ue_2 * log(mi_u2/mf_u2);
 %du_2 = ue_2 * log(mi_u2/mf_u2) - g * tu2;
-du_3 = ue_3 * log(mi_u3/mf_u3);
-%du_3 = ue_3 * log(mi_u3/mf_u3) - g * tu3;
-du_4 = ue_4 * log(mi_u4/mf_u4);
-%du_4 = ue_4 * log(mi_u4/mf_u4) - g * tu4;
 
-du_t = du_1 + du_2 + du_3 + du_4 - go * ts;
+du_t = du_1 + du_2 - go * ts;
 
 %% Dati RP-1
 % Calcolo delle caratteristiche con secondo stadio invariato per avere un
@@ -107,7 +99,7 @@ mi_1 = Ms_1 + mi_u2 + Mp_1;
 mf_1 = Ms_1 + mi_u2;
 
 dv_1 = ve_1 * log(mi_1/mf_1)- go * t1;
-dv_t = dv_1 + du_2 + du_3 + du_4 - go * ts;
+dv_t = dv_1 + du_2 - go * ts;
 
 %% calcolo massa Mf2
 % impongo dv_t = du_t
@@ -123,7 +115,7 @@ dv_t = dv_1 + du_2 + du_3 + du_4 - go * ts;
 % relazione fra tb, Isp e Mtot fuel per poter calcolare il tempo e la massa
 % non sovradimensionati
 
-Dv2 = du_t - dv_1 - du_3 - du_4;
+Dv2 = du_t - dv_1;
 MI2 = mf_u2 * exp((Dv2)/ue_2);
 Ue2 = Dv2/(log(mi_u2/mf_u2));
 %MI2 = mf_u2 * exp((Dv2 + g*tu2)/ue_2);

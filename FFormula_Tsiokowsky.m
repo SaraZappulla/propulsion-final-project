@@ -21,38 +21,34 @@ ts = 0;
 % Mpu_i = massa del propellente dello stadio i dell'originale
 % tui = tempo totale di combustione dello stadio i
 % Isp_ui = Impulso specifico stadio i
-% ue_i = velocità efficacie dello stadio i 
+% ue_i = velocità effettiva dello stadio i 
 
+%Britz
 %Mpay = 6900; %GTO
 Mpay = 20000; %LEO
-%Britz
 Msu_4 = 2390;
-Mpu_4 = 19820;
-tu4 = 3200;
-Isp_u4 = 328;
-ue_4 = Isp_u4 * go;
+Mpu_4 = 19800;
 
 %Block
-
+%Msu_4 = 3420; %GTO
+%Mpu_4 = 15050;
+%Mpay = 2600;
 
 Msu_3 = 4185;
 Mpu_3 = 46562;
-tu3 = 234;
 Msu_2 = 11400;
 Mpu_2 = 157300;
-tu2 = 213.3;
 Msu_1 = 30600;
 Mpu_1 = 6.457345588576308e+04 * 6;
 tu1 = 119.7;
 
 Isp_u1 = 2890.2/go;
 Isp_u2 = 327;
-Isp_u3 = 325;
+
 
 ue_1 = Isp_u1 * go;
 ue_2 = Isp_u2 * go;
-ue_3 = Isp_u3 * go;
-ue_4 = Isp_u4 * go;
+
 %% Calcolo delta v UDMH
 % mi_ui = massa iniziale dello stadio i 
 % mf_ui = massa finale dello stadio i
@@ -67,10 +63,8 @@ mf_u1 = Msu_1 + mi_u2;
 
 du_1 = ue_1 * log(mi_u1/mf_u1);
 du_2 = ue_2 * log(mi_u2/mf_u2);
-du_3 = ue_3 * log(mi_u3/mf_u3);
-du_4 = ue_4 * log(mi_u4/mf_u4);
 
-du_t = du_1 + du_2 + du_3 + du_4;
+du_t = du_1 + du_2;
 
 %% Dati RP-1
 % Calcolo delle caratteristiche con secondo stadio invariato per avere un
@@ -86,14 +80,14 @@ mi_1 = Ms_1 + mi_u2 + Mp_1;
 mf_1 = Ms_1 + mi_u2;
 
 dv_1 = ve_1 * log(mi_1/mf_1);
-dv_t = dv_1 + du_2 + du_3 + du_4;
+dv_t = dv_1 + du_2;
 
 %% calcolo massa Mf2
 % impongo dv_t = du_t
 % calcolo della massa di propellente in stadio 2 per non avere sovra
 % dimensionamento
 
-Dv2 = du_t - dv_1 - du_3 - du_4;
+Dv2 = du_t - dv_1;
 MI2 = mf_u2 * exp(Dv2/ue_2);
 Mp_2 = MI2 - mf_u2
 

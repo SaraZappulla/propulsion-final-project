@@ -16,7 +16,7 @@ for i = 1:O
     end
     k = k + 2;
 end
-Is = 2890.2/9.81;
+Is = 3093.6/9.81;
 Is2 = ones(A,O).*Is;
 
 figure(2)

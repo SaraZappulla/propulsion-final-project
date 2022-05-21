@@ -3,7 +3,7 @@ close all; clc; clear;
 % secondo stadio
 % Il programma può essere cambiato sia per considerare solo g variabile,
 % che per avere anche una certa percentuale di drag, basta commentare nel
-% codice le righe neseccarie
+% codice le righe neseccarie 101, 120,136
 % Approssimazioni fatte:
 % Resistenza dell'aria da una vd = 0.1% per il primo stadio e 0.05% per il
 % secondo stadio (PA quando hai la traiettoria effettiva, dopo 100km non
@@ -65,10 +65,10 @@ Msu_2 = 11400;
 Mpu_2 = 157300;
 tu2 = 213.3;
 Msu_1 = 30600;
-Mpu_1 = 6.457345588576308e+04 * 6;
+Mpu_1 = 6.358322536981013e+04 * 6;
 tu1 = 119.7;
 
-Isp_u1 = 2890.2/go;
+Isp_u1 = 3.007237512742100e+02;
 Isp_u2 = 327;
 
 ue_1 = Isp_u1 * go; %m/s
@@ -95,11 +95,8 @@ mf_u1 = Msu_1 + mi_u2;
 
 du_1 = ue_1 * log(mi_u1/mf_u1) - go * tu1;
 ddu_1 = vd2 * ue_1 * log(mi_u1/mf_u1);
-du_1 = du_1-ddu_1;
-%du_2 = ue_2 * log(mi_u2/mf_u2);
 du_2 = ue_2 * log(mi_u2/mf_u2) - gu2 * tu2;
 ddu_2 = vd2 * ue_2 * log(mi_u2/mf_u2);
-%du_2 = du_2-ddu_2;
 
 du_t = du_1 + du_2 - go * ts %- ddu_1 - ddu_2;
 
@@ -107,8 +104,8 @@ du_t = du_1 + du_2 - go * ts %- ddu_1 - ddu_2;
 % Calcolo delle caratteristiche con secondo stadio invariato per avere un
 % paragone sensato
 Ms_1 = 30600;
-Mp_1 = 6.4132e+04 * 6;
-t1 = 96.5237;
+Mp_1 = 6.4457e+04 * 6;
+t1 = 97.0073;
 
 Isp_1 = 296.6463;
 ve_1 = Isp_1 * go; 
@@ -116,11 +113,11 @@ ve_1 = Isp_1 * go;
 mi_1 = Ms_1 + mi_u2 + Mp_1; 
 mf_1 = Ms_1 + mi_u2;
 Tr = 1.7141e+06 * 6;
-mpunto_p = 632.7768*6;
+mpunto_p = 632.81*6;
 
 dv_1 = ve_1 * log(mi_1/mf_1)- go * t1;
 dd_1 = dv_1 * vd2;
-dv_t = dv_1 + du_2 - go * ts %- dd_1;
+dv_t = dv_1 + du_2 - go * ts % - dd_1;
 
 %% calcolo massa Mf2
 % impongo dv_t = du_t

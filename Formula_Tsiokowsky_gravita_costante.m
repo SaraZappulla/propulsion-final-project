@@ -56,17 +56,15 @@ Msu_2 = 11400;
 Mpu_2 = 157300;
 tu2 = 213.3;
 Msu_1 = 30600;
-Mpu_1 = 6.457345588576308e+04 * 6;
+Mpu_1 = 6.358322536981013e+04 * 6;
 tu1 = 119.7;
 
-Isp_u1 = 2890.2/go;
+Isp_u1 = 3.007237512742100e+02;
 Isp_u2 = 327;
 
 ue_1 = Isp_u1 * go; %m/s
 ue_2 = Isp_u2 * go;
 
-% DATI per funzione
-T_u =1.649783376099530e+06 * 6;
 %% Calcolo delta v UDMH approssimazione 1
 % mi_ui = massa iniziale dello stadio i 
 % mf_ui = massa finale dello stadio i
@@ -89,8 +87,8 @@ du_t = du_1 + du_2 - go * ts;
 % Calcolo delle caratteristiche con secondo stadio invariato per avere un
 % paragone sensato
 Ms_1 = 30600;
-Mp_1 = 6.4132e+04 * 6;
-t1 = 96.5237;
+Mp_1 = 6.4457e+04 * 6;
+t1 = 97.0073;
 
 Isp_1 = 296.6463;
 ve_1 = Isp_1 * go; 

@@ -15,7 +15,7 @@ Po = 101325;
 Ru = 8314;
 Mmp = 21.7;
 Mmpe = 22.316;
-Tc = 3046.32;
+Tc = 3045.94;
 OF = 6.9;
 go = 9.81;
 Pc = 16600000; %Pa
@@ -31,17 +31,17 @@ ks = 1.05;
 %% calcolo udmh
 %frozen 
 Mmpe_u = 16.7;
-Tc_u = 3415;
+Tc_u = 3526.33;
 OF_u = 2.67;
-gammae_u = 1.2679;
-Pc_u = 16500000; %bar
-Pe_u = 51584; %bar
+gammae_u = 1.2700;
+Pc_u = 16500000; %Pa
+Pe_u = 51179; %bar
 LAMDAe_u = sqrt(gammae_u*(2/(gammae_u+1))^((gammae_u+1)/(gammae_u-1)));
 ks = 1.05;
 
 %% calcoli UDMH
 
-Isp2 = 2890.2/go;
+Isp2 = 2950.1/go;
 
 Rsig = Ru/Mmpe_u;
 ue_u = sqrt(((2*gammae_u)/(gammae_u-1))*Rsig*Tc_u*(1-(Pe_u/Pc_u)^((gammae_u-1)/gammae_u)));

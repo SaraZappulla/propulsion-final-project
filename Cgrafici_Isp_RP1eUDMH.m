@@ -9,7 +9,7 @@
 % Isp2: datifase3_nuovi_range155185
 % import separated by a space
 go = 9.81;
-Isp2 = 2890.2/go;
+Isp2 = 3093.6/go;
 
 Pc1 = [130:5:190];
 Pc3 = [155:185];

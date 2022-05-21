@@ -70,18 +70,18 @@ Mpu_2 = 157300;
 tu2 = 213.3;
 
 Msu_1 = 30600;
-Mpu_1 = 6.457345588576308e+04 * 6;
+Mpu_1 = 6.358322536981013e+04 * 6;
 tu1 = 119.7;
 
-Isp_u1 = 2890.2/go;
+Isp_u1 = 3.007237512742100e+02;
 Isp_u2 = 327;
 
 ue_1 = Isp_u1 * go; %m/s
 ue_2 = Isp_u2 * go;
 
 % DATI per funzione
-T_u =1.649783376099530e+06 * 6;
-mpunto_p_u = 5.137721755640139e+02 * 6; %kg/s
+T_u =1.648141488852405e+06 * 6;
+mpunto_p_u = 5.058935065426273e+02 * 6; %kg/s
 D1 = 7.4; %m
 D2 = 4.1;
 D3 = 4.1;
@@ -151,8 +151,8 @@ du_tp = ddu_1 + ddu_2;
 % Calcolo delle caratteristiche con secondo stadio invariato per avere un
 % paragone sensato
 Ms_1 = 30600;
-Mp_1 = 6.4132e+04 * 6;
-t1 = 96.5237;
+Mp_1 = 6.4457e+04 * 6;
+t1 = 97.0073;
 
 Isp_1 = 296.6463;
 ve_1 = Isp_1 * go; 
@@ -160,7 +160,7 @@ ve_1 = Isp_1 * go;
 mi_1 = Ms_1 + mi_u2 + Mp_1; 
 mf_1 = Ms_1 + mi_u2;
 Tr = 1.7141e+06 * 6;
-mpunto_p = 632.7768*6;
+mpunto_p = 632.81*6;
 
 %Per calcolare l'angolo necessario
 %for j = 1:length(A)

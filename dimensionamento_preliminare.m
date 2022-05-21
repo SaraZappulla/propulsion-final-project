@@ -1,5 +1,8 @@
 close all; clc; clear;
 
+% Programma che contiene considerazioni iniziali, non usato per la
+% relazione definitiva, ma solo per i primi ragionamenti: tbRP1 = tbUDMMH
+% PA valori non aggiornati
 %frozen 
 Po = 101325;
 Ru = 8314;

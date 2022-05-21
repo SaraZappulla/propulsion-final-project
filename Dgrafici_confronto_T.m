@@ -43,36 +43,16 @@ figure(2)
 plot(Pc,((Tm1)))
 hold on
 
-%% provo a fare ottimizzazione
-% OPZIONE 1: COMPARAZIONE CON FUNZIONE LINEARE
-%a = polyfit(Pc,Tm1,1)
-%y = polyval(a,Pc)
-%b = Tm1-y
 
-% OPZIONE 2: COMPARAZIONE CON FUNZIONE QUADRATICA
-a = polyfit(Pc,Tm1,2)
-y = polyval(a,Pc)
-b = Tm1-y
-[T2,T3] = maxk(b,3)
-vect1 = T2
-vect2 = T3
-figure(6)
-plot(Pc,b)
-hold on
-plot(Pc(vect2),vect1,'*','LineWidth',2)
-title('Error function between Data and Approximate function');
-xlabel('Pc[bar]');
-ylabel('Error function[m/s^2]');
-grid on
+%% UDMH
 
-%% 
-
-cf2 = 1.7748;
-Me2 = 3.891;
-son2 = 706.1;
+tt = length(Tm1)
+cf2 = 1.7835;
+Me2 = 3.8353;
+son2 = 718.75;
 Pc2 = 165; 
-cstar2 = 1660.9;
-rho2 = 0.087298;
+cstar2 = 1696.7;
+rho2 = 0.12582;
 
 ve2 = Me2*son2;
 mpunto2 = Ae*ve2 *rho2;
@@ -80,7 +60,6 @@ T2 = cf2*cstar2*mpunto2;
 Tm2 = cf2*cstar2/tb;
 p2 = Tm2 + log(T2)
 
-tt = length(Tm1)
 figure(1)
 semilogy(Pc,ones(tt,1).*T2)
 hold on
@@ -98,3 +77,35 @@ title('Thrust over mass comparison');
 xlabel('Pc[bar]');
 ylabel('T/m[m/s^2]');
 legend('H2O2/RP-1 Thrust/mass','Original engine fixed Thrust/mass');
+%% provo a fare ottimizzazione
+% OPZIONE 1: COMPARAZIONE CON FUNZIONE LINEARE
+%a = polyfit(Pc,Tm1,1)
+%y = polyval(a,Pc)
+%b = Tm1-y
+
+% OPZIONE 2: COMPARAZIONE CON FUNZIONE QUADRATICA
+lin = [-1.5*10^-3,1.5*10^-3]
+a = 0;
+for i = 1:tt
+    if (T1(i) >= T2 && a==0)
+        PP = Pc(i);
+        a = 1;
+    end
+end
+Plin = [PP,PP]
+a = polyfit(Pc,Tm1,2)
+y = polyval(a,Pc)
+b = Tm1-y
+[T2,T3] = maxk(b,3)
+vect1 = T2
+vect2 = T3
+figure(6)
+plot(Pc,b,'k')
+hold on
+plot(Pc(vect2),vect1,'*b','LineWidth',2)
+plot(Plin,lin,'r')
+title('Error function between Data and Approximate function');
+xlabel('Pc[bar]');
+ylabel('Error function[m/s^2]');
+grid on
+

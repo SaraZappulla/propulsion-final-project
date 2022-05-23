@@ -12,7 +12,7 @@
 % Aet = Rapporto Ae/At 
 % ...
 
-Ae = 26.2;
+Ae = 1.5^2/4 * pi
 tb = 119.7;
 
 son1 = sonn*100;
@@ -36,7 +36,7 @@ Tm1 = cf1.*cstar1./tb;
 
 r = 10.*(T1);
 figure(1)
-semilogy(Pc,((T1)))
+plot(Pc,((T1)))
 hold on
 
 figure(2)
@@ -61,7 +61,7 @@ Tm2 = cf2*cstar2/tb;
 p2 = Tm2 + log(T2)
 
 figure(1)
-semilogy(Pc,ones(tt,1).*T2)
+plot(Pc,ones(tt,1).*T2)
 hold on
 grid on 
 title('Thrust comparison');
@@ -96,9 +96,9 @@ Plin = [PP,PP]
 a = polyfit(Pc,Tm1,2)
 y = polyval(a,Pc)
 b = Tm1-y
-[T2,T3] = maxk(b,3)
-vect1 = T2
-vect2 = T3
+[T3,T4] = maxk(b,3)
+vect1 = T3
+vect2 = T4
 figure(6)
 plot(Pc,b,'k')
 hold on

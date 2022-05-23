@@ -127,7 +127,8 @@ while (par >= toll && j<10^5)
     mi_1 = mfuel_o + mf_u1;
     tb = mfuel_o/((mpunto_p)*ks);
 
-    [g1,dd_1,vf1r,hf1r,gf1r,rhos,hs] = calcolo_dv_drag_gm(0,Atot1,Tr,tb,0,mi_1,mpunto_p,rhoo,0,go,0,0,A(4));
+    [g1,dd_1,vf1r,hf1r,gf1r,rhos,hs] = calcolo_dv_drag_gm(0,Atot1,Tr,tb,0,...
+    mi_1,mpunto_p,rhoo,0,go,0,0,A(238));
     mscelta2 = 0;
     a = 0;
     if dd_1 < (ddu_1+toll2) && dd_1>(ddu_1-toll2)
